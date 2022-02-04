@@ -26,7 +26,7 @@ const (
 	layoutISO = "2006-01-02"
 	layoutUS  = "January 2, 2006"
 	relPath   = "./logs/"
-	port      = ":8081"
+	port      = ":80"
 )
 
 var policy = bluemonday.StrictPolicy()
@@ -117,6 +117,7 @@ func main() {
 	fmt.Println(p1.toString())
 	*/
 
+	http.Handle("/images/", http.StripPrefix("/images/", http.FileServer(http.Dir("images"))))
 	http.HandleFunc("/", home)
 	http.HandleFunc("/confirmation", confirmation)
 	log.Fatal(http.ListenAndServe(port, nil))
