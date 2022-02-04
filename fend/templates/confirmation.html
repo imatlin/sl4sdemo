@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Thanks You, Visitor!</title>
+    <style>
+        h1 {text-align: center;}
+        h2 {text-align: center;}
+    </style>
+  </head>
+  <body>
+    <h1>Thank you for leaving a message!</h1>
+    <br><br>
+    <script type="text/javascript">   
+        function Redirect() 
+        {  
+            window.location="/"; 
+        } 
+        document.write("You will be redirected back to the welcome page in 5 seconds. Click <a href='/'>here</a> to go back immediately."); 
+        setTimeout('Redirect()', 5000);   
+    </script>
+  </body>
+</html>
