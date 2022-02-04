@@ -11,5 +11,10 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+# Folders we do not need
+logs/
+
+# Misc. items
+
 # Dependency directories (remove the comment below to include it)
 # vendor/
