@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Welcome, Visitor!</title>
+    <style>
+        h1 {text-align: center;}
+        h2 {text-align: center;}
+    </style>
+  </head>
+  <body>
+      <h1>Welcome, Visitor!</h1>
+      <img src="/images/front_img.JPG" alt="Helicopter over Rio" width="100%" class="center"/>
+      <h2>Thank you for visitng our beautiful city!</h2>
+      <br/>
+      <h3>Please leave a message for future visitors:</h3>
+      <form action="/save" method="POST">
+        <label for="fname">First name:</label>
+        <input type="text" id="fname" name="fname"><br><br>
+        <label for="lname">Last name:</label>
+        <input type="text" id="lname" name="lname"><br><br>
+        <label for="country">Country:</label>
+        <select id="country" name="country">
+            <option>US</option>
+            <option>Canada</option>
+            <option>France</option>
+            <option>UK</option>
+            <option>Other</option>
+        </select>
+        <br><br>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city">
+        <label for="state">State/Province:</label>
+        <input type="text" id="state" name="state"><br><br>
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" cols="50"></textarea><br><br>
+        <input type="submit" value="Submit">
+      </form>
+  </body>
+</html>
