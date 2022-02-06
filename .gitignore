@@ -11,8 +11,10 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-# Folders we do not need
+# Folders we do not need in the SCM
 logs/
+journal/
+.vscode
 
 # Misc. items
 
