@@ -1,6 +1,5 @@
 package com.datatheorem.logproc;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,11 +46,11 @@ public class LogProcApplication implements ApplicationRunner {
             }
         }
         catch (IndexOutOfBoundsException e) {
-            logger.debug(e.getMessage());
+            logger.debug("Exception processing command-line arguments:\n" + e.getMessage());
             System.out.println("Error processing command-line arguments. Usage: logproc [--journalPath=<path-to-journal-files>] [--logFile=<filename>] [--date=<YYYY-MM-DD>]");
         }
         
-        logger.trace("Journal Path:" + journalPath + "; Log Path: " + logFile + "; Date: " + logDate);
+        logger.info("Journal Path:" + journalPath + "; Log Path: " + logFile + "; Date: " + logDate);
 
         // open visitor log file and process it
         List<VisitorEntry> records = new ArrayList<>();
@@ -76,7 +75,7 @@ public class LogProcApplication implements ApplicationRunner {
                 csvReader.close();
             }
             catch (Exception e) {
-                logger.debug(e.getMessage());
+                logger.debug("Exception processing CSV file:\n" + e.getMessage());
             }
             
             if(records.isEmpty()) {
@@ -89,10 +88,10 @@ public class LogProcApplication implements ApplicationRunner {
             }
         }
         catch (IOException e) {
-            logger.debug(e.getMessage());
+            logger.debug("Exception opening visitor log file:\n" + e.getMessage());
         }
         catch (Exception e) {
-            logger.debug(e.getMessage());
+            logger.debug("Exception processing visitor log file:\n" + e.getMessage());
         }
 
         // Look through system logs for jndi messages
@@ -101,16 +100,21 @@ public class LogProcApplication implements ApplicationRunner {
             while(logLine != null) {
                 if(logLine.indexOf("jndi:ldap") >= 0) {
                     // print one if found to trigger Log4Shell
-                    logger.error(logLine);
+                    try {
+                        logger.error(logLine);
+                    }
+                    catch (Exception e) {
+                        logger.debug("Exception while logging potentially malicious input:\n" + e.getMessage());
+                    }
                 }
                 logLine = r.readLine();
             }
         }
         catch (IOException e) {
-            logger.debug(e.getMessage());
+            logger.debug("Exception opening system log file:\n" + e.getMessage());
         }
         catch (Exception e) {
-            logger.debug(e.getMessage());
+            logger.debug("Exception reading or handling system log file:\n" + e.getMessage());
         }
     }
 }
