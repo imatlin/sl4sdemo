@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import com.opencsv.CSVReaderHeaderAware;
 import org.apache.logging.log4j.LogManager;
@@ -69,7 +70,12 @@ public class LogProcApplication implements ApplicationRunner {
                     records.add(v);
 
                     // THIS will trigger Log4Shell vulnerability if present in the record
-                    logger.trace(values.toString());
+                    try {
+                        logger.warn(values.toString());
+                    }
+                    catch (Exception e) {
+                        logger.debug("Exception logging visitor entry:\n" + e.getMessage());
+                    }
                     values = csvReader.readMap();
                 }
                 csvReader.close();
@@ -98,7 +104,7 @@ public class LogProcApplication implements ApplicationRunner {
         try (BufferedReader r = new BufferedReader(new FileReader(logFile))) {
             String logLine = r.readLine();
             while(logLine != null) {
-                if(logLine.indexOf("jndi:ldap") >= 0) {
+                if(logLine.toLowerCase(Locale.US).indexOf("jndi:ldap") >= 0) {
                     // print one if found to trigger Log4Shell
                     try {
                         logger.error(logLine);
